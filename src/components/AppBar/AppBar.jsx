@@ -1,26 +1,15 @@
 import TopNavigation from "@cloudscape-design/components/top-navigation";
 
-// import { Auth } from 'aws-amplify';
-import {useEffect, useState} from "react";
+export default ({data,signOut}) => {
 
-export default () => {
+    const username = data?.signInDetails?.loginId
 
-    const [username, setUsername] = useState("");
-
-    // useEffect(() => {
-
-    //     const load = async () => {
-    //         // Auth.currentUserInfo().then(
-    //         //     (result) => {
-    //         //         setUsername(result.attributes.email);
-    //         //     }
-    //         // )
-    //     };
-
-    //     load();
-    // }, []);
-
-
+    function handleSignOut(e){
+        if(e?.detail?.id == "signout"){
+            signOut()
+        }
+    }
+   
     return (
         <TopNavigation
             identity={{
@@ -31,10 +20,11 @@ export default () => {
                 {
                     type: "menu-dropdown",
                     text: username,
+                    onItemClick:handleSignOut,
                     iconName: "user-profile",
                     items: [
                         {id: "profile", text: "Profile"},
-                        { id: "signout", text: "Sign out" },
+                        { id: "signout", text: "Sign out"},
                     ]
                 }
             ]}

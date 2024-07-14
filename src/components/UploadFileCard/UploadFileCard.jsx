@@ -32,7 +32,8 @@ function UploadFileCard(props) {
     async function onChange(e) {
         setProgress(0);
         const file = e.target.files[0];
-        setFilename(file.name);
+        // setFilename(file.name);
+        console.log("here file =>>",file)
 
         // try {
         //     var response = await Storage.put(file.name, file, {

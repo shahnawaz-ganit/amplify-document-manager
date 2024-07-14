@@ -7,22 +7,22 @@ import TableListFiles from "../components/TableListFiles/TableListFiles.jsx";
 import UploadFileCard from "../components/UploadFileCard/UploadFileCard.jsx";
 import SpaceBetween from "@cloudscape-design/components/space-between";
 
-export default function Main(props) {
+export default function Main({signOut,data,level}) {
 
     return (
         <>
-            <AppBar/>
+            <AppBar data={data} signOut={signOut} />
             <FilesAppLayout
                
                 breadcrumbs={defaultBreadcrumbs}
-                title={props.level == 'private' ? "My private files" : "All public files"}
+                title={level == 'private' ? "My private files" : "All public files"}
             
             >
                 <SpaceBetween size="2">
                     {/* <br /> */}
-                    <UploadFileCard level={props.level}/>
+                    <UploadFileCard level={level}/>
                     <br />
-                    <TableListFiles level={props.level}/>
+                    <TableListFiles level={level}/>
                 </SpaceBetween>
             </FilesAppLayout>
 
