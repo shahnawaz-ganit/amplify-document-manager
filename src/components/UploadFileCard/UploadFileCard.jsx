@@ -11,7 +11,7 @@ import {
     SpaceBetween, Table, TokenGroup
 } from "@cloudscape-design/components"
 
-// import {Amplify, Storage} from 'aws-amplify';
+import {storage} from 'aws-amplify';
 // import {Predictions, AmazonAIPredictionsProvider} from '@aws-amplify/predictions';
 
 // Amplify.addPluggable(new AmazonAIPredictionsProvider());
@@ -22,134 +22,139 @@ function UploadFileCard(props) {
     const [progress, setProgress] = useState();
     const [uploaded, setUploaded] = useState(false);
 
-    const [identify, setIdentify] = useState();
-    const [interpret, setInterpret] = useState();
-    const [identifyErr, setIdentifyErr] = useState(null);
-    const [keyValueTokenGroup, setKeyValueTokenGroup] = useState();
-    const [firstLinesTokenGroup, setFirstLinesTokenGroup] = useState();
+    // const [identify, setIdentify] = useState();
+    // const [interpret, setInterpret] = useState();
+    // const [identifyErr, setIdentifyErr] = useState(null);
+    // const [keyValueTokenGroup, setKeyValueTokenGroup] = useState();
+    // const [firstLinesTokenGroup, setFirstLinesTokenGroup] = useState();
 
 
     async function onChange(e) {
         setProgress(0);
         const file = e.target.files[0];
-        // setFilename(file.name);
+        setFilename(file.name);
         console.log("here file =>>",file)
 
-        // try {
-        //     var response = await Storage.put(file.name, file, {
-        //         progressCallback(progress) {
-        //             setProgress(progress.loaded * 100 / progress.total);
-        //         },
-        //         level: props.level,
-        //         useAccelerateEndpoint: true
-        //     });
-        //     setUploaded(true);
-        // } catch (error) {
-        //     console.log("Error uploading file: ", error);
-        // }
+        try {
+
+            storage.uploadData({
+                path: `media/${file.name}`,
+                data:file
+            })
+            // var response = await storage.put(file.name, file, {
+            //     progressCallback(progress) {
+            //         setProgress(progress.loaded * 100 / progress.total);
+            //     },
+            //     level: props.level,
+            //     useAccelerateEndpoint: true
+            // });
+            // setUploaded(true);
+        } catch (error) {
+            console.log("Error uploading file: ", error);
+        }
 
         // var responseIdentify = await onIdentify(file);
         // var responseInterpret = await onInterpret(responseIdentify.text.fullText);
 
     }
 
-    async function onIdentify(file) {
+    // async function onIdentify(file) {
 
-        // try {
-        //     // var respPrediction = await Predictions.identify({
-        //     //     text: {
-        //     //         source: {
-        //     //             file
-        //     //         }
-        //     //     }
-        //     // });
+    //     try {
+    //         var respPrediction = await Predictions.identify({
+    //             text: {
+    //                 source: {
+    //                     file
+    //                 }
+    //             }
+    //         });
 
-        //     // setIdentify(respPrediction);
-        //     // console.log(respPrediction);
+    //         setIdentify(respPrediction);
+    //         console.log(respPrediction);
 
-        //     var keyValuesGroupArray = [];
-        //     var firstLinesGroupArray = [];
+    //         var keyValuesGroupArray = [];
+    //         var firstLinesGroupArray = [];
 
-        //     // respPrediction.text.keyValues.forEach(
-        //     //     (each) => {
-        //     //         keyValuesGroupArray.push({
-        //     //             label: each.key,
-        //     //             // dismissLabel: "Remove"
-        //     //         })
-        //     //     }
-        //     // );
+    //         respPrediction.text.keyValues.forEach(
+    //             (each) => {
+    //                 keyValuesGroupArray.push({
+    //                     label: each.key,
+    //                     // dismissLabel: "Remove"
+    //                 })
+    //             }
+    //         );
 
-        //     // for (var i = 0; i < Math.min(5, respPrediction.text.lines.length); i++) {
-        //     //     firstLinesGroupArray.push({
-        //     //         label: "Line " + i + ": " + respPrediction.text.lines[i],
-        //     //     })
-        //     // }
+    //         for (var i = 0; i < Math.min(5, respPrediction.text.lines.length); i++) {
+    //             firstLinesGroupArray.push({
+    //                 label: "Line " + i + ": " + respPrediction.text.lines[i],
+    //             })
+    //         }
 
-        //     // setKeyValueTokenGroup(keyValuesGroupArray);
-        //     // setFirstLinesTokenGroup(firstLinesGroupArray);
-        //     // setIdentifyErr(null);
+    //         setKeyValueTokenGroup(keyValuesGroupArray);
+    //         setFirstLinesTokenGroup(firstLinesGroupArray);
+    //         setIdentifyErr(null);
 
-        //     // return respPrediction;
+    //         return respPrediction;
 
 
-        // } catch (error) {
-        //     console.log("Error uploading file: ", error);
+    //     } catch (error) {
+    //         console.log("Error uploading file: ", error);
 
-        //     setIdentify();
-        //     setKeyValueTokenGroup();
-        //     setFirstLinesTokenGroup();
-        //     setIdentifyErr({
-        //         header: "Text identification data error - No valid data",
-        //         type: "error",
-        //         content: "This function only works for PDF files.",
-        //         id: "message_error"
-        //     });
+    //         setIdentify();
+    //         setKeyValueTokenGroup();
+    //         setFirstLinesTokenGroup();
+    //         setIdentifyErr({
+    //             header: "Text identification data error - No valid data",
+    //             type: "error",
+    //             content: "This function only works for PDF files.",
+    //             id: "message_error"
+    //         });
 
-        //     return null;
+    //         return null;
 
-        // }
+    //     }
 
-    }
+    // }
 
-    async function onInterpret(fullText) {
+    // async function onInterpret(fullText) {
 
-        // try {
-        //     var respPredictions = await Predictions.interpret({
-        //         text: {
-        //             source: {
-        //                 text: fullText,
-        //             },
-        //             type: "ALL"
-        //         }
-        //     });
+    //     // try {
+    //     //     var respPredictions = await Predictions.interpret({
+    //     //         text: {
+    //     //             source: {
+    //     //                 text: fullText,
+    //     //             },
+    //     //             type: "ALL"
+    //     //         }
+    //     //     });
 
-        //     setInterpret(respPredictions);
-        // } catch (e) {
-        //     console.log(e);
-        // }
+    //     //     setInterpret(respPredictions);
+    //     // } catch (e) {
+    //     //     console.log(e);
+    //     // }
 
-    }
+    // }
 
-    function retrieveItems(){
-        // var textEntitiesArray = [];
-        // var aMap = {};
+    // function retrieveItems(){
+    //     // var textEntitiesArray = [];
+    //     // var aMap = {};
 
-        // interpret.textInterpretation.textEntities.forEach(
-        //     (each) => {
-        //         aMap[each.type] ??= [];
-        //         aMap[each.type].push(each.text);
-        //     }
-        // );
+    //     // interpret.textInterpretation.textEntities.forEach(
+    //     //     (each) => {
+    //     //         aMap[each.type] ??= [];
+    //     //         aMap[each.type].push(each.text);
+    //     //     }
+    //     // );
 
-        // for (let key in aMap) {
-        //     textEntitiesArray.push({
-        //         'type' : key,
-        //         'text' : aMap[key].join(', '),
-        //     })
-        // }
+    //     // for (let key in aMap) {
+    //     //     textEntitiesArray.push({
+    //     //         'type' : key,
+    //     //         'text' : aMap[key].join(', '),
+    //     //     })
+    //     // }
 
-        // return textEntitiesArray;
-    }
+    //     // return textEntitiesArray;
+    // }
 
     return (
         <Container className="container-style" >
@@ -192,7 +197,7 @@ function UploadFileCard(props) {
 
                 </div>
 
-                {
+                {/* {
                     identify == null || identify === undefined ?
                         <></> :
                         <ExpandableSection headerText="Identify text (available only for documents)">
@@ -306,7 +311,7 @@ function UploadFileCard(props) {
                                 </Grid>
                             </Form>
                         </ExpandableSection>
-                }
+                } */}
 
             </SpaceBetween>
         </Container>
