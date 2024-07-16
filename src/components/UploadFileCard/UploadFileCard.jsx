@@ -11,7 +11,7 @@ import {
     SpaceBetween, Table, TokenGroup
 } from "@cloudscape-design/components"
 
-import {storage} from 'aws-amplify';
+import {uploadData} from 'aws-amplify/storage';
 // import {Predictions, AmazonAIPredictionsProvider} from '@aws-amplify/predictions';
 
 // Amplify.addPluggable(new AmazonAIPredictionsProvider());
@@ -37,7 +37,7 @@ function UploadFileCard(props) {
 
         try {
 
-            storage.uploadData({
+            uploadData({
                 path: `media/${file.name}`,
                 data:file
             })
