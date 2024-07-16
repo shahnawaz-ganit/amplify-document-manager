@@ -37,10 +37,21 @@ function UploadFileCard(props) {
 
         try {
 
-            uploadData({
+            const result = await uploadData({
                 path: `media/${file.name}`,
-                data:file
-            })
+                data:file,
+                options:{
+                    onProgress: ({ transferredBytes, totalBytes }) => {
+                        if (totalBytes) {
+                            setProgress(Math.round(
+                                (transferredBytes / totalBytes) * 100
+                              ))
+                          }
+                        
+                    }
+                }
+            }).result;
+            console.log("Path from Response: ", result.path);
             // var response = await storage.put(file.name, file, {
             //     progressCallback(progress) {
             //         setProgress(progress.loaded * 100 / progress.total);
