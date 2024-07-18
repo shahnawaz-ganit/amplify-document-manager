@@ -12,6 +12,17 @@ const schema = a.schema({
       content: a.string(),
     })
     .authorization((allow) => [allow.guest()]),
+  documentManager: a
+    .model({
+      url:a.string(),
+      path:a.string(),
+      file_name:a.string()
+    })
+    .authorization((allow) => [
+      allow.guest().to(["read"]),
+      allow.groups(["admin"]).to(["read","create","delete","update","list"]),
+      allow.groups(["auditor","users"]).to(["read","create","list"]),
+  ]),
 });
 
 export type Schema = ClientSchema<typeof schema>;

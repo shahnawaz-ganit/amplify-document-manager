@@ -33,7 +33,7 @@ function UploadFileCard(props) {
         setProgress(0);
         const file = e.target.files[0];
         setFilename(file.name);
-        console.log("here file =>>",file)
+        console.log("here file =>>",file, typeof file)
 
         try {
 
